@@ -4,7 +4,7 @@ import styles from './Users.css';
 
 import { PAGE_SIZE } from '../constants';
 
-function Users({ list: dataSource, total, page: current }) {
+function Users({ list: dataSource, total, loading, page: current }) {
   function deleteHandler(id) {
     console.warn(`TODO: ${id}`);
   }
@@ -43,7 +43,7 @@ function Users({ list: dataSource, total, page: current }) {
   return (
     <div className={ styles.normal }>
       <div>
-        <Table columns={columns} dataSource={dataSource} rowKey={record => record.id} pagination={false}></Table>
+        <Table loading={loading} columns={columns} dataSource={dataSource} rowKey={record => record.id} pagination={false}></Table>
         <Pagination className="ant-table-pagination" total={total} current={current} pageSize={PAGE_SIZE}></Pagination>
       </div>
     </div>
@@ -57,6 +57,7 @@ function mapStateToProps(state) {
     list,
     total,
     page,
+    loading: state.loading.models.users,
   }
 }
 
