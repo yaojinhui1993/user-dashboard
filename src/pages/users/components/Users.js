@@ -1,5 +1,5 @@
 import { connect } from 'dva';
-import { Table, Pagination, Popconfirm } from 'antd';
+import { Table, Pagination, Popconfirm, Button } from 'antd';
 import { routerRedux } from 'dva/router';
 import styles from './Users.css';
 import UserModal from './UserModal';
@@ -26,6 +26,13 @@ function Users({ dispatch, list: dataSource, total, loading, page: current }) {
       type: 'users/patch',
       payload: { id, values}
     })
+  }
+
+  function createHandler(values) {
+    dispatch({
+      type: 'users/create',
+      payload: values,
+    });
   }
 
   const columns = [
@@ -64,6 +71,12 @@ function Users({ dispatch, list: dataSource, total, loading, page: current }) {
   return (
     <div className={ styles.normal }>
       <div>
+        <div className={styles.create}>
+          <UserModal record={{}} onOk={createHandler}>
+            <Button type="primary"> Create User</Button>
+          </UserModal>
+        </div>
+
         <Table loading={loading} columns={columns} dataSource={dataSource} rowKey={record => record.id} pagination={false}></Table>
         <Pagination className="ant-table-pagination" total={total} current={current} pageSize={PAGE_SIZE} onChange={pageChangeHandler}></Pagination>
       </div>
