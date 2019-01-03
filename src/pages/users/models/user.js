@@ -29,6 +29,12 @@ export default {
       yield call(usersService.remove, id);
       const page = yield select(state => state.users.page);
       yield put({type: 'fetch', payload: { page }});
+    },
+
+    *patch({ payload: { id, values}}, { call, put, select}) {
+      yield call(usersService.patch, id, values);
+      const page = yield select(state => state.users.page);
+      yield put({ type: 'fetch', payload: { page }});
     }
   },
   subscriptions: {
